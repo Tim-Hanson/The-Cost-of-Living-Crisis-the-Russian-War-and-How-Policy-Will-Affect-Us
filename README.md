@@ -25,3 +25,10 @@ Gas_Consumption3 = pd.concat(((pd.read_excel(io=File2, sheet_name=Year, header=5
 
 Gas_Consumption = pd.concat([Gas_Consumption1, Gas_Consumption2, Gas_Consumption3])
 
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "metadata": {},
+   "outputs": [],
