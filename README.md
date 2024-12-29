@@ -1,2 +1,2 @@
 
-![Data Pipeline](assets/Pictures/Data Pipeline.png)
+![Cover Photo](assets/Pictures/Cover Photo.jpg)
