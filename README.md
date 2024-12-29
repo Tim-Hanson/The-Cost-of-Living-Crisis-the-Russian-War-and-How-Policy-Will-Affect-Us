@@ -1,1 +1,1 @@
-![assets/Pictures/Data Pipeline.png]
+![/assets/Pictures/Data Pipeline.png]
