@@ -1,6 +1,7 @@
 # The Cost-of-Living Crisis, the Russian Invasion and What can be Done to Help – A Data Science Project
 
 ![Cover Photo](assets/Pictures/Cover%20Photo.jpg)
+
 (Signify, 2023)
 
 ‌
@@ -10,7 +11,8 @@ In 2021 the United Kingdom started to see an increase in the cost of day-to-day 
 
 At the start of 2022 Russia invaded Ukraine. Many headlines at the time linked the conflict to rising energy prices in the UK, claiming the severing of our Russian gas imports led to heightened fuel import costs.
 
-![Breaking News](assets/Pictures/ Breaking%20News.jpg)
+![Breaking News](assets/Pictures/Breaking%20News.jpg)
+
 Borrett (2022), Jones (2022), Clark (2022), News (2022).
 
 ## Data Science Project Goals
