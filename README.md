@@ -1,1 +1,2 @@
-![/assets/Pictures/Data Pipeline.png]
+(assets/images/histogram.png)
+![Cover Image](assets/Pictures/Data Pipeline.png)
