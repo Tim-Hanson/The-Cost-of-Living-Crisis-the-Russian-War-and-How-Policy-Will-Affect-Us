@@ -225,7 +225,429 @@ In the first case no cleaning was needed, and data was imported directly. In the
 
 HERE CODE
 
-To enable the creation of Choropleths it is needed to allocate a 3-letter location code to each region. This is done by completing a join using the Location_Code mapping table.
+To enable the creation of Choropleths it is needed to allocate a 3-letter location code to each region. This is done by completing a join using the Location_Code mapping table. This was created manually by refering to the location codes from the Geo-JSON, and the regional names from the Gas_Consumption table.
+```python
+#Printing a list of all Regions in the GeoJSON along with their Location Code
+for ref in range(len(Regions['features'])):
+    print(f"{Regions['features'][ref]['properties']['NUTS112CD']} / {Regions['features'][ref]['properties']['NUTS112NM']}")
+```
+
+    UKC / North East (England)
+    UKD / North West (England)
+    UKE / Yorkshire and The Humber
+    UKF / East Midlands (England)
+    UKG / West Midlands (England)
+    UKH / East of England
+    UKI / London
+    UKJ / South East (England)
+    UKK / South West (England
+    UKL / Wales
+    
+
+
+```python
+#Printing a list of all the Location Codes in the Gas_Consumption dataframe
+Gas_Consumption['Country or region'].unique()
+```
+
+
+
+
+    array(['North East', 'North West', 'Yorkshire and The Humber',
+           'East Midlands', 'West Midlands', 'East', 'London', 'South East',
+           'South West', 'Yorkshire and the Humber', 'Inner London',
+           'Outer London'], dtype=object)
+
+
+
+
+```python
+#Defining the Location_Code mapping table
+Location_Code_List = [
+    ('UKC', 'North East', 'North East'),
+    ('UKD', 'North West', 'North West'),
+    ('UKE', 'Yorkshire and The Humber', 'Yorkshire and The Humber'),
+    ('UKE', 'Yorkshire and the Humber', 'Yorkshire and The Humber'),
+    ('UKF', 'East Midlands', 'East Midlands'),
+    ('UKG', 'West Midlands', 'West Midlands'),
+    ('UKH', 'East', 'East'),
+    ('UKI', 'Inner London', 'London'),
+    ('UKI', 'Outer London', 'London'),
+    ('UKI', 'London', 'London'),
+    ('UKJ', 'South East', 'South East'),
+    ('UKK', 'South West', 'South West')
+]
+
+Location_Code = pd.DataFrame(Location_Code_List, columns=['Location_Code', 'In_Region', 'Region'])
+Location_Code
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Location_Code</th>
+      <th>In_Region</th>
+      <th>Region</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>UKC</td>
+      <td>North East</td>
+      <td>North East</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>UKD</td>
+      <td>North West</td>
+      <td>North West</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>UKE</td>
+      <td>Yorkshire and The Humber</td>
+      <td>Yorkshire and The Humber</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>UKE</td>
+      <td>Yorkshire and the Humber</td>
+      <td>Yorkshire and The Humber</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>UKF</td>
+      <td>East Midlands</td>
+      <td>East Midlands</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>UKG</td>
+      <td>West Midlands</td>
+      <td>West Midlands</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>UKH</td>
+      <td>East</td>
+      <td>East</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>UKI</td>
+      <td>Inner London</td>
+      <td>London</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>UKI</td>
+      <td>Outer London</td>
+      <td>London</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>UKI</td>
+      <td>London</td>
+      <td>London</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>UKJ</td>
+      <td>South East</td>
+      <td>South East</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>UKK</td>
+      <td>South West</td>
+      <td>South West</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+```python
+#This step reclassifies regions into the desired regions found in the Geo-JSON
+Gas_Consumption_Cleaned = Gas_Consumption.merge(Location_Code, right_on='In_Region', left_on='Country or region', how='left')
+
+#This step combines values for Outer and inner london, which have both been classified as London
+Gas_Consumption_Cleaned = Gas_Consumption_Cleaned.groupby(['Year','Location_Code'],as_index=False).agg({
+    'Region': 'max',
+    'Number of meters\n(thousands):\nDomestic\n' : 'sum',
+     'Number of meters\n(thousands):\nNon-Domestic': 'sum',
+     'Number of meters\n(thousands):\nAll meters': 'sum',
+     'Total consumption\n(GWh):\nDomestic\n': 'sum',
+     'Total consumption\n(GWh):\nNon-Domestic': 'sum',
+     'Total consumption\n(GWh):\nAll meters': 'sum',
+     'Mean consumption\n(kWh per meter):\nDomestic\n': 'sum',
+     'Mean consumption\n(kWh per meter):\nNon-Domestic': 'sum',
+     'Mean consumption\n(kWh per meter):\nAll meters' : 'sum'
+})
+Gas_Consumption_Cleaned
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Year</th>
+      <th>Location_Code</th>
+      <th>Region</th>
+      <th>Number of meters\n(thousands):\nDomestic\n</th>
+      <th>Number of meters\n(thousands):\nNon-Domestic</th>
+      <th>Number of meters\n(thousands):\nAll meters</th>
+      <th>Total consumption\n(GWh):\nDomestic\n</th>
+      <th>Total consumption\n(GWh):\nNon-Domestic</th>
+      <th>Total consumption\n(GWh):\nAll meters</th>
+      <th>Mean consumption\n(kWh per meter):\nDomestic\n</th>
+      <th>Mean consumption\n(kWh per meter):\nNon-Domestic</th>
+      <th>Mean consumption\n(kWh per meter):\nAll meters</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2005</td>
+      <td>UKC</td>
+      <td>North East</td>
+      <td>1037.403</td>
+      <td>16.219</td>
+      <td>1053.622</td>
+      <td>20710.658157</td>
+      <td>13952.158200</td>
+      <td>34662.816357</td>
+      <td>19963.946660</td>
+      <td>860235.415254</td>
+      <td>32898.721132</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2005</td>
+      <td>UKD</td>
+      <td>North West</td>
+      <td>2747.967</td>
+      <td>48.871</td>
+      <td>2796.838</td>
+      <td>53390.873953</td>
+      <td>35926.287793</td>
+      <td>89317.161746</td>
+      <td>19429.226753</td>
+      <td>735124.875550</td>
+      <td>31935.050134</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2005</td>
+      <td>UKE</td>
+      <td>Yorkshire and The Humber</td>
+      <td>1989.970</td>
+      <td>36.997</td>
+      <td>2026.967</td>
+      <td>39024.143235</td>
+      <td>30648.965991</td>
+      <td>69673.109226</td>
+      <td>19610.417863</td>
+      <td>828417.601184</td>
+      <td>34373.085120</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2005</td>
+      <td>UKF</td>
+      <td>East Midlands</td>
+      <td>1620.786</td>
+      <td>28.502</td>
+      <td>1649.288</td>
+      <td>31469.021304</td>
+      <td>18936.399391</td>
+      <td>50405.420695</td>
+      <td>19415.901485</td>
+      <td>664388.442601</td>
+      <td>30561.927750</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2005</td>
+      <td>UKG</td>
+      <td>West Midlands</td>
+      <td>1984.918</td>
+      <td>36.397</td>
+      <td>2021.315</td>
+      <td>37726.189511</td>
+      <td>22962.792215</td>
+      <td>60688.981726</td>
+      <td>19006.422185</td>
+      <td>630897.937055</td>
+      <td>30024.504704</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>157</th>
+      <td>2022</td>
+      <td>UKG</td>
+      <td>West Midlands</td>
+      <td>2221.428</td>
+      <td>21.914</td>
+      <td>2243.342</td>
+      <td>25247.105176</td>
+      <td>15406.577700</td>
+      <td>40653.682876</td>
+      <td>11365.259273</td>
+      <td>703047.262016</td>
+      <td>18121.928300</td>
+    </tr>
+    <tr>
+      <th>158</th>
+      <td>2022</td>
+      <td>UKH</td>
+      <td>East</td>
+      <td>2217.992</td>
+      <td>20.366</td>
+      <td>2238.358</td>
+      <td>25143.154335</td>
+      <td>13711.245874</td>
+      <td>38854.400209</td>
+      <td>11335.998658</td>
+      <td>673241.965715</td>
+      <td>17358.438734</td>
+    </tr>
+    <tr>
+      <th>159</th>
+      <td>2022</td>
+      <td>UKI</td>
+      <td>London</td>
+      <td>3001.866</td>
+      <td>39.524</td>
+      <td>3041.390</td>
+      <td>35792.967053</td>
+      <td>19576.692142</td>
+      <td>55369.659195</td>
+      <td>11923.572555</td>
+      <td>495311.510530</td>
+      <td>18205.379512</td>
+    </tr>
+    <tr>
+      <th>160</th>
+      <td>2022</td>
+      <td>UKJ</td>
+      <td>South East</td>
+      <td>3428.042</td>
+      <td>35.662</td>
+      <td>3463.704</td>
+      <td>39604.299045</td>
+      <td>16541.969255</td>
+      <td>56146.268301</td>
+      <td>11553.037870</td>
+      <td>463854.221730</td>
+      <td>16209.892156</td>
+    </tr>
+    <tr>
+      <th>161</th>
+      <td>2022</td>
+      <td>UKK</td>
+      <td>South West</td>
+      <td>1994.866</td>
+      <td>18.140</td>
+      <td>2013.006</td>
+      <td>19620.178140</td>
+      <td>10846.932730</td>
+      <td>30467.110870</td>
+      <td>9835.336379</td>
+      <td>597956.600307</td>
+      <td>15135.131674</td>
+    </tr>
+  </tbody>
+</table>
+<p>162 rows × 12 columns</p>
+</div>
+
+
+
+
+```python
+#Checking that all regions have been successfully allocated a Location_Code
+Gas_Consumption_Cleaned[Gas_Consumption_Cleaned['Location_Code'].isnull()]
+```
+
+
+
+
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Year</th>
+      <th>Location_Code</th>
+      <th>Region</th>
+      <th>Number of meters\n(thousands):\nDomestic\n</th>
+      <th>Number of meters\n(thousands):\nNon-Domestic</th>
+      <th>Number of meters\n(thousands):\nAll meters</th>
+      <th>Total consumption\n(GWh):\nDomestic\n</th>
+      <th>Total consumption\n(GWh):\nNon-Domestic</th>
+      <th>Total consumption\n(GWh):\nAll meters</th>
+      <th>Mean consumption\n(kWh per meter):\nDomestic\n</th>
+      <th>Mean consumption\n(kWh per meter):\nNon-Domestic</th>
+      <th>Mean consumption\n(kWh per meter):\nAll meters</th>
+    </tr>
+  </thead>
+  <tbody>
+  </tbody>
+</table>
+</div>
 
 This mapping table also allowed me to clean inconsistencies in the naming of regions found in the data; mapping both ‘Inner London’ and ‘Outer London’ as ‘London’; and mapping inconsistencies such as 'Yorkshire and the Humber' to 'Yorkshire and The Humber'.
 
