@@ -7,7 +7,7 @@
 ‌
 ## Introduction
 
-In 2021 the United Kingdom started to see an increase in the cost of day-to-day essentials. This phenomenon has been dubbed ‘the cost-of-living crisis’. One of the most shocking increases in price was seen in the energy market. This disproportionately affected working class families, and leading to an estimated 14.3 million individuals, including 4.3 million children, to be living in poverty in the UK in 2022‌ (Francis-Devine, 2024).
+In 2021 the United Kingdom started to see an increase in the cost of day-to-day essentials. This phenomenon has been dubbed ‘the cost-of-living crisis’. One of the most shocking increases in price was seen in the energy market. This disproportionately affected working class families, leading to an estimated 14.3 million individuals, including 4.3 million children, to be living in poverty in the UK in 2022‌ (Francis-Devine, 2024).
 
 At the start of 2022 Russia invaded Ukraine. Many headlines at the time linked the conflict to rising energy prices in the UK, claiming the severing of our Russian gas imports led to heightened fuel import costs.
 
