@@ -1106,10 +1106,11 @@ Population_by_Region_and_Year_Pivot.corr()
 </table>
 </div>
 
+Values for 2005 to 2010 were extrapolated using a linear regression model fit to all years of data using Sklearn. When these values are plotted (Figure 2) there is an obvious mismatch across the years 2010 to 2011 where the extrapolated data meets the actual data, especially for London. This suggests the model has not been very successful in predicting datapoints outside the initial data range. This is likely due to the outliers created in the years 2020 to 2022 due to the Covid-19 pandemic.
+
 ![Extrapolated Population Graph 1](assets/Graphs/Population%20Graphs/Extrapolated%20population%20data%20(Model%201).png)
 *Figure 2*
 
-Values for 2005 to 2010 were extrapolated using a linear regression model fit to all years of data using Sklearn. When these values are plotted (Figure 2) there is an obvious mismatch across the years 2010 to 2011 where the extrapolated data meets the actual data, especially for London. This suggests the model has not been very successful in predicting datapoints outside the initial data range. This is likely due to the outliers created in the years 2020 to 2022 due to the Covid-19 pandemic.
 ```python
 def extrapolate_population_for_region_v1(region):
     #Filtering to handle each region seperately
@@ -1335,10 +1336,11 @@ Population_by_Region_and_Year_Combined_Line.update_layout(
         size=26 
     ))
 ```
-![Extrapolated Population Graph 2](assets/Graphs/Population%20Graphs/Extrapolated%20population%20data%20(Model%202).png)
-*Figure 3*
 
 Another model was fit with datapoints from 2020 to 2022 removed from the training data. Values for 2005 to 2010 were extrapolated and plotted (Figure 3). The transition from extrapolated to real data here is much smoother.
+
+![Extrapolated Population Graph 2](assets/Graphs/Population%20Graphs/Extrapolated%20population%20data%20(Model%202).png)
+*Figure 3*
 
 ```python
 def extrapolate_population_for_region_v2(region):
