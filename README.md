@@ -90,19 +90,7 @@ To be able to plot the regional data onto choropleths it was necessary to ensure
 LAD20_to_RGN20_Conversion_Table = pd.read_excel(io=Local_Authority_District_to_Region_4)
 LAD20_to_RGN20_Conversion_Table
 ```
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
 </style>
 <table border="1" class="dataframe">
   <thead>
@@ -211,7 +199,21 @@ LAD20_to_RGN20_Conversion_Table
 
 A conversion table was used (see above) (dataset \[4\]) to join the corresponding LAD20CD values onto the population dataset.
 
-CoDE HERE
+```python
+#Join the RGN20NM onto the UK_Population_Density_Raw_Data table
+UK_Population_Raw_Data_With_Region = pd.merge(UK_Population_Raw_Data, LAD20_to_RGN20_Conversion_Table, left_on='ladcode23', right_on='LAD20CD', how='left')
+
+#This checks if all rows relating to england have had a RGN20NM successfully allocated
+len(UK_Population_Raw_Data_With_Region[UK_Population_Raw_Data_With_Region['RGN20NM'].notna()]) - len(UK_Population_Raw_Data_With_Region[UK_Population_Raw_Data_With_Region['country'] == 'E'])
+
+#This initially returned a difference of 1092
+#After manual adjustments this turned to 0
+```
+
+
+
+
+    0
 
 Panda’s _.isna_ function was used to check for any failed matches. Some results were returned. To rectify this the missing values were added to the conversion table and the code reran.
 
