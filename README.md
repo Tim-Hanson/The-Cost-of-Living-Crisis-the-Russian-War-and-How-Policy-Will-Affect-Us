@@ -54,7 +54,7 @@ To limit scope, only data for England was analysed as part of this project.
 
 Please see the pdf available in this repository to better view the full data pipeline.
 
-![Data Pipeline](assets/Pictures/Data%20Pipeline.pdf)
+![Data Pipeline](assets/Pictures/Data%20Pipeline.png)
 *See pdf for better detail*
 
 **\[1\] Subnational total final energy consumption, UK, 2005 to 2022** - Department of Energy Security and Net Zero - [_https://view.officeapps.live.com/op/view.aspx?src=https%3A%2F%2Fassets.publishing.service.gov.uk%2Fmedia%2F66f2c25686ba7c46c40c6eae%2FSubnational_total_final_consumption_2005_2022.xlsx&wdOrigin=BROWSELINK_](https://view.officeapps.live.com/op/view.aspx?src=https%3A%2F%2Fassets.publishing.service.gov.uk%2Fmedia%2F66f2c25686ba7c46c40c6eae%2FSubnational_total_final_consumption_2005_2022.xlsx&wdOrigin=BROWSELINK)
