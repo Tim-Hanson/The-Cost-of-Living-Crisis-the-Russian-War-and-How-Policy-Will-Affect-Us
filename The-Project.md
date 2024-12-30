@@ -146,7 +146,7 @@ This graph largely supports the logic set out above. In 2022 the price of gas re
 
 The relationship between import price of gas and cost to consumer is less obvious before this spike. The correlation matrix below allows for evaluation of the correlation between factors less subjectively.
 
-![Corrolation of Unit cost of energy and Fuel](assets/Graphs/Corrolation20of20Unit20cost20of20energy20and20Fuel/Corrolation20of20Unit20cost20of20energy20and20Fuel.png)
+![Corrolation of Unit cost of energy and Fuel](assets/Graphs/Corrolation%20of%20Unit%20cost%20of%20energy%20and%20Fuel/Corrolation%20of%20Unit%20cost%20of%20energy%20and%20Fuel.png)
 *Figure 5*
 
 The correlation matrix shows that the cost of gas imports is the best predictor (of the fuel types shown here) of the unit cost of energy, with a p-value of 0.88.
