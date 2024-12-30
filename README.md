@@ -34,6 +34,21 @@ The effects of a change of pricing policy from marginal to regional will be inve
 Multiple datasets were leveraged to gain insight into this research question. Timeseries data was combined to observe the relationship between the average unit cost of energy, the import price of fuel and the average salary. Regional data was combined to observe geographic trends in fuel use, average unit cost of energy, and average salary.
 
 Pandas was used to import, clean and manipulate data; SKLearn was used to fit linear regressions and to extrapolate values; Plotly and Seaborn were used to bring the data to life by creating visuals.
+```python
+import os
+import pandas as pd
+import matplotlib.pyplot as plt
+import plotly.express as px
+import numpy as np
+import json
+import seaborn as sns
+import warnings
+from urllib.request import urlopen
+from plotly import graph_objects as go
+from sklearn import datasets
+from sklearn.linear_model import LinearRegression
+from dotenv import load_dotenv
+```
 
 To limit scope, only data for England was analysed as part of this project.
 
