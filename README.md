@@ -2239,7 +2239,7 @@ You can see that consistently Yorkshire and The Humber is the most vulnerable to
 
 The figure below also shows the gas consumed per person as a proportion of the median salary by region between 2005 and 2022. This time each year is plotted as a percentage difference from the minimum that year. The scale is also fixed between the minimum and maximum for the dataset, allowing us to compare the trend over time as well the difference between regions.
 
-We can see that there is a persistent trend of still inequality in the vulnerability to change in gas price, with the North being more vulnerable and the South less vulnerable. This gap in inequality is shrinking, this can be seen as the colour difference between the North and South is decreasing.
+We can see that there is a persistent trend of inequality in the vulnerability to change in gas price, with the North being more vulnerable and the South less vulnerable. The gap in inequality is shrinking, this can be seen as the colour difference between the North and South is decreasing.
 
 ![Gas Consumption as a Propotion of Salary Percent Choropleth](assets/Graphs/Domestic%20Gas%20Consumption%20as%20a%20Proportion%20of%20Salary%20%25%20Difference%20From%20Annual%20Minimum%20(%25).png)
 
@@ -2247,7 +2247,7 @@ We can see that there is a persistent trend of still inequality in the vulnerabi
 
 #### Who is The Energy Crisis Affecting
 
-Below is the figure from before showing the trends of Average Unit Cost of energy (pence per kWh) and Average Unit Cost to Generate Energy by Different Fuels (pence per kWh). Median salary (£’000) has now been added to demonstrate the fast decline in affordability.
+Below is the figure from before (Figure 4) showing the trends of Average Unit Cost of energy (pence per kWh) and Average Unit Cost to Generate Energy by Different Fuels (pence per kWh). Median salary (£’000) has now been added to demonstrate the fast decline in affordability.
 
 Although median salaries have risen over time, they have not kept up with the rise in the unit cost of energy.
 
@@ -2275,11 +2275,11 @@ The figure below plots the affordability of energy (unit energy price as a propo
 
 The introduction of Zonal energy pricing holds promise as a way to reduce the burden of energy prices as felt by the consumer, and to encourage energy sector competition to decarbonate the energy market. Legislators should however be aware of the implicit risk to regional inequalities.
 
-The gap in energy inequality between the north and south of England has been reducing with time (see Choropleth 5). The north south differences in the vulnerability to Zonal pricing have also diminished with time (see Choropleth 3). However, with time energy has been getting less affordable with time (see Choropleth 4 and Figure 11).
+The gap in energy inequality between the north and south of England has been reducing with time (see Choropleth 5). The north-south differences in the vulnerability to Zonal pricing have also diminished with time (see Choropleth 3). However, energy has been getting less affordable with time (see Choropleth 4 and Figure 11).
 
 The move to Zonal pricing has potential to penalise regions which are more reliant on gas as a source of energy. These regions overlap conspicuously with those which find energy least affordable (compare Choropleths 1 and 5). Regions where the median salary as a proportion of gas consumption would be most vulnerable to any additional cost under Zonal energy pricing (see Choropleth 2), this also overlaps conspicuous with the regions which already find energy least affordable.
 
-One benefit which marginal pricing has had is to reduce the energy inequality between regions (see Choropleth 5). Unless energy companies are willing to take a cut to their profit should Zonal pricing be introduced, then north south energy inequality may be exacerbated greatly. Particularly as energy companies look for alternative mechanisms with which to maintain their profitability, which may impact regions unequally; and as businesses relocate to make the most of reduced energy prices, in other regions.
+One benefit which marginal pricing has had is to reduce the energy inequality between regions (see Choropleth 5). Unless energy companies are willing to take a cut to their profit should Zonal pricing be introduced, then north-south energy inequality may be exacerbated greatly. Particularly as energy companies look for alternative mechanisms with which to maintain their profitability, which may impact regions unequally; and as businesses relocate to make the most of reduced energy prices, in other regions.
 
 In conclusion Zonal energy pricing has great potential to assist the energy crisis in England but does carry some risks of increasing regional inequality. The details of how it is implemented will determine its success in tackling fuel poverty in England.
 
