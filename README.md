@@ -1796,7 +1796,7 @@ The following section is heavily reliant on the use of choropleths (map graphs) 
 
 #### Creating the Choropleths
 
-As to not break the flow of the narrative which is constructed through the next section. An example of how the choropleths where generated will be given here.
+To avoid breaking the flow of the narrative in the next sectiona an example of how the choropleths where generated will be given here.
 
 All values neccesary for plotting had to be brought into one table. This was done through a series of joins, show in full on the data pipeline pdf. Only the final join is shown below.
 ```python
@@ -1805,7 +1805,7 @@ Gas_Consumption_Cleaned_PopD_MedIncome_EngPrice_Percent = Gas_Consumption_Cleane
 Gas_Consumption_Cleaned_PopD_MedIncome_EngPrice_Percent["EngPrice / Salary as a Percent of Annual Minimum(%)"] = Gas_Consumption_Cleaned_PopD_MedIncome_EngPrice_Percent["EngPrice / Salary (Pence/kWh/£'000)"]/Gas_Consumption_Cleaned_PopD_MedIncome_EngPrice_Percent["EngPrice / Salary of Annual Minimum(Pence/kWh/£'000)"]
 Gas_Consumption_Cleaned_PopD_MedIncome_EngPrice_Percent
 ```
-</style>
+
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -2164,7 +2164,7 @@ for fig in figures:
 
 All resulting choropleths are then saved to a file location.
 
-From this file location a seperate script (see 'Picture Load.ipynb' in the attached workspace) is used to bring all images into a grid as are displayed as part of this project.
+From this file location a separate script (see 'Picture Load.ipynb' in the attached workspace) is used to bring all images into a grid as are displayed as part of this project.
 
 ```python
 import os
@@ -2207,7 +2207,7 @@ plt.show()
 
 As Zonal Pricing is the most likely energy price policy reform to be implemented it is worth investigating further.
 
-Should Zonal Pricing be implemented it would, in theory, be wholly beneficial. Only decreasing the unit cost of energy or at worst keeping it the same. This should be kept in mind throughout the following section where the effects of Zonal Pricing on regional inequality are examined. Even if the threat of increasing inequality due to regional pricing is observed, it should be noted that this is against a backdrop of reduced energy costs. In theory, everyone will pay less, it is just that some will pay less than others.
+Should Zonal Pricing be implemented it would, in theory, be wholly beneficial; only decreasing the unit cost of energy or at worst keeping it the same. This should be kept in mind throughout the following section where the effects of Zonal Pricing on regional inequality are examined. Even if the threat of increasing inequality due to regional pricing is observed, it should be noted that this is against a backdrop of reduced energy costs. In theory, everyone will pay less, it is just that some will pay less than others.
 
 The risk of Zonal Pricing increasing regional inequality is more concerning once you consider that there will be pressure placed on Ofgen by energy companies who will look to redress their loss in profits via another mechanism.
 
@@ -2217,7 +2217,7 @@ Please note the regions shown in the choropleth visualisation below do not align
 
 The figure below shows the gas consumed per person by region between 2005 and 2022. In this figure the scale is set to plot the colour of the choropleth between the maxima and minima of the whole set not just for each year. This means we can use this figure to compare regional trends as well as trends over time.
 
-The figure shows a consistent trend towards less gas usage, as we would expect from figure (Figure 8). It also shows a regional trend of greater gas consumption in the north of England. The largest consumers in 2022 where the East Midlands and Yorkshire and The Humber, with a value of 5.2 MWh/person, the lowest consumer was the South East, with a value of 3.3 MWh/person.
+The figure shows a consistent trend towards less gas usage, as we would expect from Figure 8. It also shows a regional trend of greater gas consumption in the north of England. The largest consumers in 2022 where the East Midlands and Yorkshire and The Humber, with a value of 5.2 MWh/person, the lowest consumer was the South East, with a value of 3.3 MWh/person.
 
 Please note this figure only plots domestic energy consumption so will not be skewed by industry energy use.
 
@@ -2227,9 +2227,9 @@ Please note this figure only plots domestic energy consumption so will not be sk
 
 #### Who Would be Affected the Most by Zonal Pricing
 
-The figure below shows the gas consumed per person as a portion of the median salary by region between 2005 and 2022. This can be thought of as a measure to demonstrate who would be affected most in the case that regions are penalised for gas consumption. In this figure the scale functions independently for each year. The colour scale is stretched between the maxima and minima of the for each year. This means we can use this figure to compare regions proportional to one another but cannot observe trends over time.
+The figure below shows the gas consumed per person as a proportion of the median salary by region between 2005 and 2022. This can be thought of as a measure to demonstrate who would be affected most in the case that regions are penalised for gas consumption. In this figure the scale functions independently for each year. The colour scale is stretched between the maxima and minima of the for each year. This means we can use this figure to compare regions proportional to one another but cannot observe trends over time.
 
-You can see that consistently Yorkshire and The Humber is the most vulnerable to a regional increase in the price of gas, with a 2022 value of 1.66e-07 (GWh/person/£), and the South East being the least vulnerable to a regional increase in the price of gas, with a 2022 value of 0.93e-07 (GWh/person/£).
+You can see that consistently Yorkshire and The Humber is the most vulnerable to a regional increase in the price of gas, with a 2022 value of 166e-09 (GWh/person/£) (shown as 166n on the scale of the charts), and the South East being the least vulnerable to a regional increase in the price of gas, with a 2022 value of 93e-09 (GWh/person/£).
 
 ![Gas Consumption as a Propotion of Salary Choropleth](assets/Graphs/Domestic%20Gas%20Consumption%20as%20a%20Proportion%20of%20Salary%20(GWh%20per%20person%20per%20£).png)
 
@@ -2237,7 +2237,7 @@ You can see that consistently Yorkshire and The Humber is the most vulnerable to
 
 #### Has the Proportional Vulnerability to Regional Pricing Changed Over Time
 
-The figure below also shows the gas consumed per person as a portion of the median salary by region between 2005 and 2022. This time each year is plotted as a percentage difference from the minimum that year. The scale is also fixed between the minimum and maximum for the dataset, allowing us to compare the trend over time as well the difference between regions.
+The figure below also shows the gas consumed per person as a proportion of the median salary by region between 2005 and 2022. This time each year is plotted as a percentage difference from the minimum that year. The scale is also fixed between the minimum and maximum for the dataset, allowing us to compare the trend over time as well the difference between regions.
 
 We can see that there is a persistent trend of still inequality in the vulnerability to change in gas price, with the North being more vulnerable and the South less vulnerable. This gap in inequality is shrinking, this can be seen as the colour difference between the North and South is decreasing.
 
