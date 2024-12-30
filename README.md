@@ -105,7 +105,9 @@ Dataset \[3\] was used to bring population for each region into the dataset. Thi
 
 Values had to be extrapolated for the years 2005 to 2010.
 
-HERE POP GRAPH
+![Base Population Graph](assets/Graphs/Population%20Graphs/Base%20population%20data.png)
+
+*Figure 1*
 
 Firstly, the data was plotted to visually determine the data’s trend. The lines produced appear to be mostly straight suggesting a linear relationship between population and time (Accounting Insights, 2024). Although a few outliers can be determined, such as the reduction in population in London in 2020 and 2021, likely caused by the emigration of individuals out of major population centres which occurred in the Covid-19 pandemic (Centre for Cities, 2024). Even with this outlier from the visual we can observe that the variance year to year is small; therefore, the error of extrapolated values is also likely to be small.
 
