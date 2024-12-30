@@ -114,11 +114,13 @@ HERE CORR CODE TABVLE
 
 Secondly, Panda’s _.corr_ function was used to calculate Pearson’s correlation values between population(for each region) and year (See the right most column). All values were 0.9 or greater indicating a strong linear correlation between population and year.
 
-HERE POP EXTRAP GRAPH 1
+![Extrapolated Population Graph 1](assets/Graphs/Population%20Graphs/Extrapolated%20population%20data%20(Model%201).png)
+*Figure 2*
 
 Values for 2005 to 2010 were extrapolated using a linear regression model fit to all years of data using Sklearn. When these values are plotted there is an obvious mismatch across the years 2010 to 2011 where the extrapolated data meets the actual data, especially for London. This suggests the model has not been very successful in predicting datapoints outside the initial data range. This is likely due to the outliers created in the years 2020 to 2022 due to the Covid-19 pandemic.
 
-HERE POP EXTRAP GRAPH 2
+![Extrapolated Population Graph 2](assets/Graphs/Population%20Graphs/Extrapolated%20population%20data%20(Model%202).png)
+*Figure 3*
 
 Another model was fit with datapoints from 2020 to 2022 removed from the training data. Values for 2005 to 2010 were extrapolated and plotted. The transition from extrapolated to real data here is much smoother.
 
