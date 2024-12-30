@@ -223,9 +223,39 @@ The sub national gas consumption dataset \[2\] captured data at different granul
 
 In the first case no cleaning was needed, and data was imported directly. In the second case both rows where imported. In the third case, only the row with a sum value for London was imported.
 
-HERE CODE
+```python
+#For this datasource not all the sheets have the same format, so the read_excel function must be adjusted for each.
+
+#Defining the sheet names to read from the excel
+Years1 = [str(n) for n in list(range(2005,2014))]
+Gas_Consumption1 = pd.concat(((pd.read_excel(io=Sub_National_Gas_Consumption_2, sheet_name=Year, header=5, nrows=9, skiprows=[6,7]).assign(Year = Year))for Year in Years1), ignore_index=True)
+
+#In this one Inner and outerlondon are differinciated
+Years2 = [str(n) for n in list(range(2014,2015))]
+Gas_Consumption2 = pd.concat(((pd.read_excel(io=Sub_National_Gas_Consumption_2, sheet_name=Year, header=5, nrows=10, skiprows=[6,7]).assign(Year = Year))for Year in Years2), ignore_index=True)
+
+#Removing the sub regions of Inner and outer London as as sum of these 'London is already included' this is to avoid double counting
+Years3 = [str(n) for n in list(range(2015,2023))]
+Gas_Consumption3 = pd.concat(((pd.read_excel(io=Sub_National_Gas_Consumption_2, sheet_name=Year, header=5, nrows=11, skiprows=[6,7,8,16,17]).assign(Year = Year))for Year in Years3), ignore_index=True)
+
+
+#Combined data from all sheets into one dataframe
+Gas_Consumption = pd.concat([Gas_Consumption1, Gas_Consumption2, Gas_Consumption3])
+
+```
+
+
+
 
 To enable the creation of Choropleths it is needed to allocate a 3-letter location code to each region. This is done by completing a join using the Location_Code mapping table. This was created manually by refering to the location codes from the Geo-JSON, and the regional names from the Gas_Consumption table.
+
+This mapping table also allowed me to clean inconsistencies in the naming of regions found in the data; mapping both ‘Inner London’ and ‘Outer London’ as ‘London’; and mapping inconsistencies such as 'Yorkshire and the Humber' to 'Yorkshire and The Humber'.
+```python
+#Importing the GeoJSON
+with urlopen('https://raw.githubusercontent.com/martinjc/UK-GeoJSON/refs/heads/master/json/eurostat/ew/nuts1.json') as response:
+    Regions = json.load(response)
+    
+```
 ```python
 #Printing a list of all Regions in the GeoJSON along with their Location Code
 for ref in range(len(Regions['features'])):
@@ -286,7 +316,7 @@ Location_Code
 
 
 
-</style>
+
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -399,7 +429,6 @@ Gas_Consumption_Cleaned
 
 
 
-</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -592,6 +621,9 @@ Gas_Consumption_Cleaned
 
 
 
+
+After the join a group by was performed to sum the split values for London.
+
 ```python
 #Checking that all regions have been successfully allocated a Location_Code
 Gas_Consumption_Cleaned[Gas_Consumption_Cleaned['Location_Code'].isnull()]
@@ -600,7 +632,7 @@ Gas_Consumption_Cleaned[Gas_Consumption_Cleaned['Location_Code'].isnull()]
 
 
 
-</style>
+
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -624,21 +656,262 @@ Gas_Consumption_Cleaned[Gas_Consumption_Cleaned['Location_Code'].isnull()]
 </table>
 </div>
 
-This mapping table also allowed me to clean inconsistencies in the naming of regions found in the data; mapping both ‘Inner London’ and ‘Outer London’ as ‘London’; and mapping inconsistencies such as 'Yorkshire and the Humber' to 'Yorkshire and The Humber'.
 
-HERE CODE
-
-After the join a group by was performed to sum the split values for London.
-
-HERE CODE
 
 The field \[Location Code\] was checked for NULL values
 
 #### Grouping Overly Granular Data
 
-The domestic energy bills dataset \[5\] had an additional regional grouping of south. I only had South East and South West I decided to split the South region by averaging its value first with the south east and then with the South West and replaced the east and west values with the averaged ones. This method was selected as the differences in values between South West and Southern, and South East and Southern where small, ~7% from Southern either way.
+The domestic energy bills dataset \[5\] had an additional regional grouping of Southern.
+```python
+Energy_Price[Energy_Price['Year'] == 2000]
+```
 
-This could be more appropriately split using a 3<sup>rd</sup> variable to calculate a weighted split based for example population or regional area. This method was however chosen for simplicity and is acceptable variance between the regions is small.
+
+
+
+
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Year</th>
+      <th>Region</th>
+      <th>Average Unit Cost (Pence per kWh)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>63</th>
+      <td>2000</td>
+      <td>Northern Scotland</td>
+      <td>8.25</td>
+    </tr>
+    <tr>
+      <th>65</th>
+      <td>2000</td>
+      <td>Northern Ireland</td>
+      <td>9.35</td>
+    </tr>
+    <tr>
+      <th>67</th>
+      <td>2000</td>
+      <td>West Midlands</td>
+      <td>7.44</td>
+    </tr>
+    <tr>
+      <th>70</th>
+      <td>2000</td>
+      <td>South East</td>
+      <td>7.38</td>
+    </tr>
+    <tr>
+      <th>73</th>
+      <td>2000</td>
+      <td>South Wales</td>
+      <td>8.64</td>
+    </tr>
+    <tr>
+      <th>76</th>
+      <td>2000</td>
+      <td>Southern Scotland</td>
+      <td>8.11</td>
+    </tr>
+    <tr>
+      <th>79</th>
+      <td>2000</td>
+      <td>Eastern</td>
+      <td>7.31</td>
+    </tr>
+    <tr>
+      <th>82</th>
+      <td>2000</td>
+      <td>Yorkshire</td>
+      <td>7.57</td>
+    </tr>
+    <tr>
+      <th>85</th>
+      <td>2000</td>
+      <td>Merseyside &amp; North Wales</td>
+      <td>8.21</td>
+    </tr>
+    <tr>
+      <th>88</th>
+      <td>2000</td>
+      <td>London</td>
+      <td>7.64</td>
+    </tr>
+    <tr>
+      <th>91</th>
+      <td>2000</td>
+      <td>North West</td>
+      <td>7.54</td>
+    </tr>
+    <tr>
+      <th>94</th>
+      <td>2000</td>
+      <td>North East</td>
+      <td>8.00</td>
+    </tr>
+    <tr>
+      <th>97</th>
+      <td>2000</td>
+      <td>East Midlands</td>
+      <td>7.26</td>
+    </tr>
+    <tr>
+      <th>100</th>
+      <td>2000</td>
+      <td>South West</td>
+      <td>8.22</td>
+    </tr>
+    <tr>
+      <th>103</th>
+      <td>2000</td>
+      <td>Southern</td>
+      <td>7.70</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+The Geo-JSON only had South East and South West regions so the Southern region was split by averaging its value first with the South East and then with the South West and replaced the East and West values with the averaged ones. This method essentially assumes there is a linear relationship as you run through the values from East to West, allowing for interpolation. This method was selected as the differences in values between South West and Southern, and South East and Southern where small, ~7% from Southern either way.
+
+This could be more appropriately split using a 3<sup>rd</sup> variable to calculate a weighted split based, for example, on population or regional area. This method was however chosen for simplicity and is acceptable as variance between the regions is small.
+```python
+#ChatGPT Generated code to replace 'South West' with the average of 'Southern' and 'South West'
+# Group by Year to calculate averages
+for year in Energy_Price['Year'].unique():
+    # Filter the current year's data for 'Southern' and 'South West'
+    southern_value = Energy_Price.loc[(Energy_Price['Year'] == year) & (Energy_Price['Region'] == 'Southern'), 'Average Unit Cost (Pence per kWh)'].values
+    south_west_value = Energy_Price.loc[(Energy_Price['Year'] == year) & (Energy_Price['Region'] == 'South West'), 'Average Unit Cost (Pence per kWh)'].values
+
+    if southern_value.size > 0 and south_west_value.size > 0:
+        # Calculate the average
+        avg_value = (southern_value[0] + south_west_value[0]) / 2
+
+        # Update 'South West' value
+        Energy_Price.loc[(Energy_Price['Year'] == year) & (Energy_Price['Region'] == 'South West'), 'Average Unit Cost (Pence per kWh)'] = avg_value
+```
+
+
+```python
+#ChatGPT Generated code to replace 'South East' with the average of 'Southern' and 'South East'
+# Group by Year to calculate averages
+for year in Energy_Price['Year'].unique():
+    # Filter the current year's data for 'Southern' and 'South East'
+    southern_value = Energy_Price.loc[(Energy_Price['Year'] == year) & (Energy_Price['Region'] == 'Southern'), 'Average Unit Cost (Pence per kWh)'].values
+    south_east_value = Energy_Price.loc[(Energy_Price['Year'] == year) & (Energy_Price['Region'] == 'South East'), 'Average Unit Cost (Pence per kWh)'].values
+
+    if southern_value.size > 0 and south_east_value.size > 0:
+        # Calculate the average
+        avg_value = (southern_value[0] + south_east_value[0]) / 2
+
+        # Update 'South East' value
+        Energy_Price.loc[(Energy_Price['Year'] == year) & (Energy_Price['Region'] == 'South East'), 'Average Unit Cost (Pence per kWh)'] = avg_value
+```
+```python
+Energy_Price = Energy_Price[Energy_Price['Region'] != 'Southern']
+Energy_Price[Energy_Price['Year'] == 2000]
+```
+
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Year</th>
+      <th>Region</th>
+      <th>Average Unit Cost (Pence per kWh)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>63</th>
+      <td>2000</td>
+      <td>Northern Scotland</td>
+      <td>8.25</td>
+    </tr>
+    <tr>
+      <th>65</th>
+      <td>2000</td>
+      <td>Northern Ireland</td>
+      <td>9.35</td>
+    </tr>
+    <tr>
+      <th>67</th>
+      <td>2000</td>
+      <td>West Midlands</td>
+      <td>7.44</td>
+    </tr>
+    <tr>
+      <th>70</th>
+      <td>2000</td>
+      <td>South East</td>
+      <td>7.54</td>
+    </tr>
+    <tr>
+      <th>73</th>
+      <td>2000</td>
+      <td>South Wales</td>
+      <td>8.64</td>
+    </tr>
+    <tr>
+      <th>76</th>
+      <td>2000</td>
+      <td>Southern Scotland</td>
+      <td>8.11</td>
+    </tr>
+    <tr>
+      <th>79</th>
+      <td>2000</td>
+      <td>Eastern</td>
+      <td>7.31</td>
+    </tr>
+    <tr>
+      <th>82</th>
+      <td>2000</td>
+      <td>Yorkshire</td>
+      <td>7.57</td>
+    </tr>
+    <tr>
+      <th>85</th>
+      <td>2000</td>
+      <td>Merseyside &amp; North Wales</td>
+      <td>8.21</td>
+    </tr>
+    <tr>
+      <th>88</th>
+      <td>2000</td>
+      <td>London</td>
+      <td>7.64</td>
+    </tr>
+    <tr>
+      <th>91</th>
+      <td>2000</td>
+      <td>North West</td>
+      <td>7.54</td>
+    </tr>
+    <tr>
+      <th>94</th>
+      <td>2000</td>
+      <td>North East</td>
+      <td>8.00</td>
+    </tr>
+    <tr>
+      <th>97</th>
+      <td>2000</td>
+      <td>East Midlands</td>
+      <td>7.26</td>
+    </tr>
+    <tr>
+      <th>100</th>
+      <td>2000</td>
+      <td>South West</td>
+      <td>7.96</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
 
 ### Extrapolation of Data
 
