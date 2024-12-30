@@ -2161,7 +2161,7 @@ for fig in figures:
 
 All resulting choropleths are then saved to a file location.
 
-From this file location a seperate script is used to bring all images into a grid as are displayed as part of this project.
+From this file location a seperate script (see 'Picture Load.ipynb' in the attached workspace) is used to bring all images into a grid as are displayed as part of this project.
 
 ```python
 import os
