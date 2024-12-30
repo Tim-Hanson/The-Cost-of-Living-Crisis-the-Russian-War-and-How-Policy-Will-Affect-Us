@@ -23,7 +23,7 @@ In this project a hypothesis will be addressed, and further analysis will be car
 
 The hypothesis investigated in the first half of this project is:
 
-“The Russian invasion of Ukraine caused an increase in the cost of energy bills in England”
+“The Russian invasion of Ukraine caused an increase in the cost of energy bills in England.”
 
 ### Future Policy
 
@@ -93,7 +93,6 @@ LAD20_to_RGN20_Conversion_Table = pd.read_excel(io=Local_Authority_District_to_R
 LAD20_to_RGN20_Conversion_Table
 ```
 
-</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -249,7 +248,7 @@ Gas_Consumption = pd.concat([Gas_Consumption1, Gas_Consumption2, Gas_Consumption
 
 
 
-To enable the creation of Choropleths it is needed to allocate a 3-letter location code to each region. This is done by completing a join using the Location_Code mapping table. This was created manually by refering to the location codes from the Geo-JSON, and the regional names from the Gas_Consumption table.
+To enable the creation of choropleths it is needed to allocate a 3-letter location code to each region. This is done by completing a join using the Location_Code mapping table. This was created manually by refering to the location codes from the Geo-JSON, and the regional names from the Gas_Consumption table.
 
 This mapping table also allowed inconsistencies in the naming of regions found in the data to be cleaned. Mapping both ‘Inner London’ and ‘Outer London’ as ‘London’; and mapping inconsistencies such as 'Yorkshire and the Humber' to 'Yorkshire and The Humber'.
 ```python
@@ -405,7 +404,7 @@ Location_Code
 </table>
 </div>
 
-The Location_Code table was joined to bring throughthe desired location codes and clean region names. A  groupby was then performed on to sum where aregions values had been split over multiple rows, e.g. 'Inner London' and 'Outer London'.
+The Location_Code table was joined to bring through the desired location codes and clean region names. A groupby was then performed to sum where a region's values had been split over multiple rows, e.g. 'Inner London' and 'Outer London'.
 
 ```python
 #This step reclassifies regions into the desired regions found in the Geo-JSON
@@ -776,6 +775,7 @@ Energy_Price[Energy_Price['Year'] == 2000]
 </div>
 The Geo-JSON only had South East and South West regions so the Southern region had to be split. This was split done by averaging its value first with the South East and then with the South West and replaced the East and West values with the averaged ones. This method essentially assumes there is a linear relationship as you run through the values from East to West, allowing for interpolation. This method was selected as the differences in values between South West and Southern, and South East and Southern where small, ~7% from Southern either way.
 
+
 This could be more appropriately split using a 3<sup>rd</sup> variable to calculate a weighted split based, for example, on population or regional area. This method was however chosen for simplicity and is acceptable as variance between the regions is small.
 ```python
 #ChatGPT Generated code to replace 'South West' with the average of 'Southern' and 'South West'
@@ -924,7 +924,8 @@ Values had to be extrapolated for the years 2005 to 2010.
 
 Firstly, the data was plotted to visually determine the data’s trend. The lines produced appear to be mostly straight suggesting a linear relationship between population and time (Accounting Insights, 2024). Although a few outliers can be determined, such as the reduction in population in London in 2020 and 2021, likely caused by the emigration of individuals out of major population centres which occurred in the Covid-19 pandemic (Centre for Cities, 2024). Even with this outlier, from the visual we can observe that the variance year to year is small; therefore, the error of extrapolated values is also likely to be small.
 
-Secondly, Panda’s _.corr_ function was used to calculate Pearson’s correlation values between population (for each region) and year (See the right most column). All values were 0.9 or greater indicating a strong linear correlation between population and year.
+Secondly, Panda’s _.corr_ function was used to calculate Pearson’s correlation values between population (for each region) and year (See the right most column). Apart from London and the North East, all values were 0.98 or greater indicating a very strong linear correlation between population and year. The outliers in 2020 and 2021 in London have already been discussed; population values for the North East are significantly smaller (only 42% of the mean regional population for 2022) than values for other regions meaning smaller variations in trend cause proportionally higher impact to the p-value.
+
 ```python
 Population_by_Region_and_Year_Pivot = Population_by_Region_and_Year.pivot(index = 'Year', columns= 'Region')
 Population_by_Region_and_Year_Pivot['Year'] = Population_by_Region_and_Year_Pivot.index
