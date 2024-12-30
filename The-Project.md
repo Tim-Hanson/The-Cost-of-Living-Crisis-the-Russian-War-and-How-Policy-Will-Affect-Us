@@ -139,13 +139,15 @@ Let us first focus on the claim that the Russia – Ukraine conflict was the cau
 
 The below gragh shows the average unit cost of energy (pence per kWh) to the consumer (dataset \[5\]), and the average unit cost of fuels in terms of their energy generating potential (pence per kWh) from varying imported fuels (dataset \[6\]).
 
-HERE GRAPH
+![The Relationship Between Fuel Import Price and Cost of Energy](assets/Graphs/Unit%20Cost%20of%20energy%20and%20Fuel/Unit%20Cost%20of%20Energy%20and%20Import%20Cost%20of%20Fuel%20(2002-2023).png)
+*Figure 4*
 
 This graph largely supports the logic set out above. In 2022 the price of gas reached 4.86 pence per kWh which coincided with a steep rise in the cost to consumer up to 33.61 pence per kWh. It is worth noting however that prices were already on the rise in 2021, and the 2022 spike was only an exacerbation to this trend.
 
 The relationship between import price of gas and cost to consumer is less obvious before this spike. The correlation matrix below allows for evaluation of the correlation between factors less subjectively.
 
-HERE CORR MATRIX
+![Corrolation of Unit cost of energy and Fuel](assets/Graphs/Corrolation20of20Unit20cost20of20energy20and20Fuel/Corrolation20of20Unit20cost20of20energy20and20Fuel.png)
+*Figure 5*
 
 The correlation matrix shows that the cost of gas imports is the best predictor (of the fuel types shown here) of the unit cost of energy, with a p-value of 0.88.
 
@@ -173,15 +175,13 @@ In this section the current policy which sets energy prices (Marginal Pricing) w
 
 ‘Marginal cost pricing is where units of electricity are sold at the price of the most expensive unit needed to meet demand at a particular moment in time.’ – Stewart (2023)
 
-HERE MARG PRICE PICTURE
-
-Stewart (2023)
+![Marginal Pricing](assets/Pictures/Marginal%20Pricing%20Explained.png)
+*Figure 6* - Stewart (2023)
 
 Please note the above visual does not use actual values and it merely to demonstrate how marginal pricing works. Gas is very often the most expensive fuel source required to meet demand, and therefore sets the price of a unit of energy (Stewart, 2024).
 
-HERE DOM ENERGY MARKET PIC
-
-(Stewart, 2024)
+![The Domestic Energy Market in Great Britian](assets/Pictures/The%20Domestic%20Energy%20Market%20in%20Great%20Britian.png)
+*Figure 7* - (Stewart, 2024)
 
 The above diagram shows the role of marginal pricing in defining the wholesale energy price and how this has a knock on to consumer energy pricing.
 
@@ -189,9 +189,11 @@ What marginal pricing means in practice is that a unit cost to generate energy, 
 
 Marginal pricing has also been criticised as running opposed to the UK government’s own targets to fully decarbonise the power sector by 2035 (IEA, 2024).
 
-HERE GRAGH
+![Energy Consumption](assets/Graphs/Energy%20Consumption/Energy%20Consuption.png)
+*Figure 8*
 
-HERE BAR GRAGH
+![Energy Consumption Bar](assets/Graphs/Energy%20Consumption/Gas%20Consumption%20as%20a%20Percent%20of%20total%20consumption.png)
+*Figure 9*
 
 The consumption of energy from gas has fallen consistently with time in the UK. However, very little change in the proportion of total energy consumed via gas has been seen. Which has consistently stayed at ~34% since 2010, omitting 2020 and 2021. This supports the claim that marginal pricing does not provide enough incentive to reduce reliance on gas.
 
@@ -211,7 +213,8 @@ Nodal Pricing is the most granular pricing strategy currently being proposed. In
 
 The following section is heavily reliant on the use of choropleths (map graphs) to interpret regional data. To make the meanings of these easier to interpret a cheat sheet table has been included below.
 
-HERE CHET SHEET TABLE
+![Choropleth Cheat Sheet](assets/Pictures/Choropleth%20Cheat%20Sheet.png)
+*Figure 10*
 
 ### The Effects of Zonal Pricing
 
@@ -229,7 +232,8 @@ The figure shows a consistent trend towards less gas usage, as we would expect f
 
 Please note this figure only plots domestic energy consumption so will not be skewed by industry energy use.
 
-HERE C1
+![Gas Consumption Choropleth](assets/Graphs/Domestic%20Gas%20Consumption%20by%20Region%20and%20Year%20(GWh%20per%20person).png)
+*Choropleth 1*
 
 #### Who Would be Affected the Most by Zonal Pricing
 
@@ -237,7 +241,8 @@ The figure below shows the energy generated from gas consumed per person as a po
 
 You can see that consistently Yorkshire and The Humber is the most vulnerable to a regional increase in the price of gas, with a 2022 value of 1.66e-07 (GWh/person/£), and the South East being the least vulnerable to a regional increase in the price of gas, with a 2022 value of 0.93e-07 (GWh/person/£).
 
-HERE C2
+![Gas Consumption as a Propotion of Salary Choropleth](assets/Graphs/Domestic%20Gas%20Consumption%20as%20a%20Proportion%20of%20Salary%20(GWh%20per%20person%20per%20£).png)
+*Choropleth 2*
 
 #### Has the Proportional Vulnerability to Regional Pricing Changed Over Time
 
@@ -245,7 +250,8 @@ The figure below also shows the energy generated from gas consumed per person as
 
 We can see that there is a persistent trend of still inequality in the vulnerability to change in gas price, with the North being more vulnerable and the South less vulnerable. This gap in inequality is shrinking, this can be seen as the colour difference between the North and South is decreasing.
 
-HERE C3
+![Gas Consumption as a Propotion of Salary Percent Choropleth](assets/Graphs/Domestic%20Gas%20Consumption%20as%20a%20Proportion%20of%20Salary%20%25%20Difference%20From%20Annual%20Minimum%20(%25).png)
+*Choropleth 3*
 
 #### Who is The Energy Crisis Affecting
 
@@ -253,13 +259,15 @@ Below is the figure from before showing the trends of Average Unit Cost of energ
 
 Although median salaries have risen over time, they have not kept up with the rise in the unit cost of energy.
 
-HERE Gragh with sal
+![Fuel Price and Salary](assets/Graphs/Unit%20Cost%20of%20energy%20and%20Fuel/Salary%20Against%20Unit%20Cost%20of%20Energy%20and%20Import%20Cost%20of%20Fuel%20(2002-2023).png)
+*Figure 11*
 
 The below figure shows the unit cost of energy as a proportion of median salary of each region and year. The minima and maxima of the colour scale have been fixed such that we can compare both regional trends and trends over time.
 
 The trend regionally shows that energy is consistently more affordable in the south of England, particularly in London. However, over time all regions are finding energy less affordable as salaries fail to keep up with energy prices.
 
-HERE c4
+![Energy Price as a Proportion of Salary Choropleth](assets/Graphs/Average%20Energy%20Price%20as%20a%20Proportion%20of%20Salary%20(Pence%20per%20kWh%20per%20£'000)%20(Fixed%20Scale).png)
+*Choropleth 4*
 
 #### Inequality in the Affordability of Energy
 
@@ -267,7 +275,8 @@ The figure below plots the affordability of energy (unit energy price as a propo
 
 2007 saw the greatest inequality in energy affordability with energy in the North East being 50% less affordable than in London. Over time, the affordability of energy has got more equal. In 2022 all regions were less than 30% less affordable than London.
 
-HERE c5
+![Energy Price as a Proportion of Salary Percent Choropleth](assets/Graphs/Average%20Energy%20Price%20as%20a%20Proportion%20of%20Salary%20%25%20Difference%20from%20Annual%20Minimum%20(%25).png)
+*Choropleth 5*
 
 ### Future Energy Policy Conclusion
 
