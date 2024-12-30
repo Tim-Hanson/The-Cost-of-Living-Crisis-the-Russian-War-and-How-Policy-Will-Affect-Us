@@ -1791,6 +1791,415 @@ The following section is heavily reliant on the use of choropleths (map graphs) 
 
 *Figure 10*
 
+#### Creating the Choropleths
+
+As to not break the flow of the narrative which is constructed through the next section. An example of how the choropleths where generated will be given here.
+
+All values neccesary for plotting had to be brought into one table. This was done through a series of joins, show in full on the data pipeline pdf. Only the final join is shown below.
+```python
+#Joining the Yearly minimum onto the main table and expressing "EngPrice / Salary (Pence/kWh/£'000)" as a percentage of the annual minimum
+Gas_Consumption_Cleaned_PopD_MedIncome_EngPrice_Percent = Gas_Consumption_Cleaned_PopD_MedIncome_EngPrice.merge(Gas_Consumption_Cleaned_PopD_MedIncome_EngPrice_Min_Values, on=['Year'], how='left')
+Gas_Consumption_Cleaned_PopD_MedIncome_EngPrice_Percent["EngPrice / Salary as a Percent of Annual Minimum(%)"] = Gas_Consumption_Cleaned_PopD_MedIncome_EngPrice_Percent["EngPrice / Salary (Pence/kWh/£'000)"]/Gas_Consumption_Cleaned_PopD_MedIncome_EngPrice_Percent["EngPrice / Salary of Annual Minimum(Pence/kWh/£'000)"]
+Gas_Consumption_Cleaned_PopD_MedIncome_EngPrice_Percent
+```
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Year</th>
+      <th>Location_Code</th>
+      <th>Region</th>
+      <th>Number of meters\n(thousands):\nDomestic\n</th>
+      <th>Number of meters\n(thousands):\nNon-Domestic</th>
+      <th>Number of meters\n(thousands):\nAll meters</th>
+      <th>Total consumption\n(GWh):\nDomestic\n</th>
+      <th>Total consumption\n(GWh):\nNon-Domestic</th>
+      <th>Total consumption\n(GWh):\nAll meters</th>
+      <th>Mean consumption\n(kWh per meter):\nDomestic\n</th>
+      <th>...</th>
+      <th>Total_Gas_Consumption(GWh/person)</th>
+      <th>Median_Income</th>
+      <th>Salary</th>
+      <th>Domestic_Gas_Consumption_to_Median_Salary(GWh/person/£)</th>
+      <th>In_Region</th>
+      <th>Average Unit Cost (Pence per kWh)</th>
+      <th>Salary (£'000)</th>
+      <th>EngPrice / Salary (Pence/kWh/£'000)</th>
+      <th>EngPrice / Salary of Annual Minimum(Pence/kWh/£'000)</th>
+      <th>EngPrice / Salary as a Percent of Annual Minimum(%)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2005</td>
+      <td>UKC</td>
+      <td>North East</td>
+      <td>1037.403</td>
+      <td>16.219</td>
+      <td>1053.622</td>
+      <td>20710.658157</td>
+      <td>13952.158200</td>
+      <td>34662.816357</td>
+      <td>19963.946660</td>
+      <td>...</td>
+      <td>0.013518</td>
+      <td>383.3</td>
+      <td>19931.6</td>
+      <td>4.052304e-07</td>
+      <td>North East</td>
+      <td>8.727273</td>
+      <td>19.9316</td>
+      <td>0.437861</td>
+      <td>0.318649</td>
+      <td>1.374119</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2005</td>
+      <td>UKD</td>
+      <td>North West</td>
+      <td>2747.967</td>
+      <td>48.871</td>
+      <td>2796.838</td>
+      <td>53390.873953</td>
+      <td>35926.287793</td>
+      <td>89317.161746</td>
+      <td>19429.226753</td>
+      <td>...</td>
+      <td>0.014177</td>
+      <td>409.5</td>
+      <td>21294.0</td>
+      <td>3.979687e-07</td>
+      <td>North West</td>
+      <td>8.181818</td>
+      <td>21.2940</td>
+      <td>0.384231</td>
+      <td>0.318649</td>
+      <td>1.205815</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2005</td>
+      <td>UKE</td>
+      <td>Yorkshire and The Humber</td>
+      <td>1989.970</td>
+      <td>36.997</td>
+      <td>2026.967</td>
+      <td>39024.143235</td>
+      <td>30648.965991</td>
+      <td>69673.109226</td>
+      <td>19610.417863</td>
+      <td>...</td>
+      <td>0.015275</td>
+      <td>400.0</td>
+      <td>20800.0</td>
+      <td>4.113173e-07</td>
+      <td>Yorkshire</td>
+      <td>8.454545</td>
+      <td>20.8000</td>
+      <td>0.406469</td>
+      <td>0.318649</td>
+      <td>1.275602</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2005</td>
+      <td>UKF</td>
+      <td>East Midlands</td>
+      <td>1620.786</td>
+      <td>28.502</td>
+      <td>1649.288</td>
+      <td>31469.021304</td>
+      <td>18936.399391</td>
+      <td>50405.420695</td>
+      <td>19415.901485</td>
+      <td>...</td>
+      <td>0.013758</td>
+      <td>412.2</td>
+      <td>21434.4</td>
+      <td>4.007314e-07</td>
+      <td>East Midlands</td>
+      <td>8.060606</td>
+      <td>21.4344</td>
+      <td>0.376059</td>
+      <td>0.318649</td>
+      <td>1.180170</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2005</td>
+      <td>UKG</td>
+      <td>West Midlands</td>
+      <td>1984.918</td>
+      <td>36.397</td>
+      <td>2021.315</td>
+      <td>37726.189511</td>
+      <td>22962.792215</td>
+      <td>60688.981726</td>
+      <td>19006.422185</td>
+      <td>...</td>
+      <td>0.011331</td>
+      <td>404.7</td>
+      <td>21044.4</td>
+      <td>3.347011e-07</td>
+      <td>West Midlands</td>
+      <td>8.454545</td>
+      <td>21.0444</td>
+      <td>0.401748</td>
+      <td>0.318649</td>
+      <td>1.260787</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>158</th>
+      <td>2022</td>
+      <td>UKG</td>
+      <td>West Midlands</td>
+      <td>2221.428</td>
+      <td>21.914</td>
+      <td>2243.342</td>
+      <td>25247.105176</td>
+      <td>15406.577700</td>
+      <td>40653.682876</td>
+      <td>11365.259273</td>
+      <td>...</td>
+      <td>0.006756</td>
+      <td>615.0</td>
+      <td>31980.0</td>
+      <td>1.312053e-07</td>
+      <td>West Midlands</td>
+      <td>34.459508</td>
+      <td>31.9800</td>
+      <td>1.077533</td>
+      <td>0.867770</td>
+      <td>1.241727</td>
+    </tr>
+    <tr>
+      <th>159</th>
+      <td>2022</td>
+      <td>UKH</td>
+      <td>East</td>
+      <td>2217.992</td>
+      <td>20.366</td>
+      <td>2238.358</td>
+      <td>25143.154335</td>
+      <td>13711.245874</td>
+      <td>38854.400209</td>
+      <td>11335.998658</td>
+      <td>...</td>
+      <td>0.006070</td>
+      <td>670.0</td>
+      <td>34840.0</td>
+      <td>1.127367e-07</td>
+      <td>Eastern</td>
+      <td>34.766436</td>
+      <td>34.8400</td>
+      <td>0.997889</td>
+      <td>0.867770</td>
+      <td>1.149946</td>
+    </tr>
+    <tr>
+      <th>160</th>
+      <td>2022</td>
+      <td>UKI</td>
+      <td>London</td>
+      <td>3001.866</td>
+      <td>39.524</td>
+      <td>3041.390</td>
+      <td>35792.967053</td>
+      <td>19576.692142</td>
+      <td>55369.659195</td>
+      <td>11923.572555</td>
+      <td>...</td>
+      <td>0.006243</td>
+      <td>766.6</td>
+      <td>39863.2</td>
+      <td>1.012392e-07</td>
+      <td>London</td>
+      <td>34.592071</td>
+      <td>39.8632</td>
+      <td>0.867770</td>
+      <td>0.867770</td>
+      <td>1.000000</td>
+    </tr>
+    <tr>
+      <th>161</th>
+      <td>2022</td>
+      <td>UKJ</td>
+      <td>South East</td>
+      <td>3428.042</td>
+      <td>35.662</td>
+      <td>3463.704</td>
+      <td>39604.299045</td>
+      <td>16541.969255</td>
+      <td>56146.268301</td>
+      <td>11553.037870</td>
+      <td>...</td>
+      <td>0.004725</td>
+      <td>689.0</td>
+      <td>35828.0</td>
+      <td>9.301583e-08</td>
+      <td>South East</td>
+      <td>34.309975</td>
+      <td>35.8280</td>
+      <td>0.957630</td>
+      <td>0.867770</td>
+      <td>1.103554</td>
+    </tr>
+    <tr>
+      <th>162</th>
+      <td>2022</td>
+      <td>UKK</td>
+      <td>South West</td>
+      <td>1994.866</td>
+      <td>18.140</td>
+      <td>2013.006</td>
+      <td>19620.178140</td>
+      <td>10846.932730</td>
+      <td>30467.110870</td>
+      <td>9835.336379</td>
+      <td>...</td>
+      <td>0.005871</td>
+      <td>622.0</td>
+      <td>32344.0</td>
+      <td>1.168839e-07</td>
+      <td>South West</td>
+      <td>34.269061</td>
+      <td>32.3440</td>
+      <td>1.059518</td>
+      <td>0.867770</td>
+      <td>1.220967</td>
+    </tr>
+  </tbody>
+</table>
+<p>163 rows × 28 columns</p>
+</div>
+This example is for the generation of Choropleth 5.
+
+To allow for trends over time to be observed it is necessary to fit the colour scale between the maximum and minimum values for all year
+
+```python
+Max_EngPrice_Sal_Perc = Gas_Consumption_Cleaned_PopD_MedIncome_EngPrice_Percent["EngPrice / Salary as a Percent of Annual Minimum(%)"].max()
+Min_EngPrice_Sal_Perc = Gas_Consumption_Cleaned_PopD_MedIncome_EngPrice_Percent["EngPrice / Salary as a Percent of Annual Minimum(%)"].min()
+```
+
+A function is then defined which creates the choropleth for each year. This function is looped over all years for which a choropleth is to be generated. All resulting choropleths are shown.
+
+```python
+def create_salary_to_engprice_choropleth_time(year):
+    fig = px.choropleth(Gas_Consumption_Cleaned_PopD_MedIncome_EngPrice_Percent.loc[Gas_Consumption_Cleaned_PopD_MedIncome_EngPrice_Percent['Year'] == year]
+                        ,locations='Location_Code'
+                        ,geojson=Regions
+                        ,color ="EngPrice / Salary as a Percent of Annual Minimum(%)"
+                        ,featureidkey="properties.NUTS112CD"
+                        ,hover_name='Region'
+                        ,range_color = (Min_EngPrice_Sal_Perc, Max_EngPrice_Sal_Perc)
+                        ,color_continuous_scale = px.colors.diverging.RdYlBu[::-1]
+                        )
+    fig.update_geos(
+        fitbounds="geojson",
+       # projection_scale = 100,
+        visible=False,
+        projection_type="orthographic" 
+        )
+    fig.update_layout(
+    margin={"r": 0, "t": 50, "l": 0, "b": 0}, 
+    title={
+        'text': f"{year}",  
+        'y': 0.95, 
+        'x': 0.5,  
+        'xanchor': 'center',
+        'yanchor': 'top'},
+    coloraxis_colorbar_title=None,
+    coloraxis_colorbar=dict(
+            len=0.8,
+            thickness=15 
+        ),
+        width=800,
+        height=650,
+        font=dict(
+        size=26 
+    ))
+
+    return fig
+
+Years_to_Graph = list(range(2005,2023))
+Years_to_Graph
+
+figures = [create_salary_to_engprice_choropleth_time(year) for year in Years_to_Graph]
+
+for fig in figures:
+    fig.show()
+    
+    #showing "Average Energy Price as a Portion of Salary as a Percentage of the annual minimum (%)"
+```
+
+All resulting choropleths are then saved to a file location.
+
+From this file location a seperate script is used to bring all images into a grid as are displayed as part of this project.
+
+```python
+import os
+import matplotlib.pyplot as plt
+import matplotlib.image as mpimg
+from glob import glob
+from dotenv import load_dotenv
+```
+
+```python
+Picture_Load = os.getenv('Picture_Load')
+```
+```python
+# Glob provides a list of files from the file location
+
+Images = glob(Picture_Load)
+
+# Create a figure with 3 columns and 6 rows
+fig, axes = plt.subplots(nrows=6, ncols=3, figsize=(9, 12))  
+axes = axes.flatten()  
+
+# Loop through the images and display them in the grid
+for ax, image in zip(axes, Images):
+    img = mpimg.imread(image)  
+    
+    
+    ax.imshow(img)
+    ax.axis('off') 
+
+# Add title to the entire figure
+plt.suptitle("Average Energy Price as a Portion of Salary (Pence/kWH/£'000)", fontsize=16, fontweight='bold', y=1.02)
+
+# Adjust layout for minimal whitespace between images
+plt.tight_layout(pad=0.2)  
+plt.subplots_adjust(wspace=0, hspace=0)  
+plt.show()
+```
+
 ### The Effects of Zonal Pricing
 
 As Zonal Pricing is the most likely energy price policy reform to be implemented it is worth investigating further.
