@@ -221,7 +221,7 @@ len(UK_Population_Raw_Data_With_Region[UK_Population_Raw_Data_With_Region['RGN20
 
 #### Accounting for varying regional structures in data
 
-The sub national gas consumption dataset \[2\] captured data at different granularity and with different naming conventions depending on the year. Some years London was grouped as a single row, others it was split over two as Inner London and Outer London, and have 3 rows London, Inner London and Outer London.
+The sub national gas consumption dataset \[2\] captured data at different granularity and with different naming conventions depending on the year. Some years London was grouped as a single row, others it was split over two as Inner London and Outer London, and some had 3 rows - London, Inner London and Outer London.
 
 In the first case no cleaning was needed, and data was imported directly. In the second case both rows where imported. In the third case, only the row with a sum value for London was imported.
 
@@ -251,7 +251,7 @@ Gas_Consumption = pd.concat([Gas_Consumption1, Gas_Consumption2, Gas_Consumption
 
 To enable the creation of Choropleths it is needed to allocate a 3-letter location code to each region. This is done by completing a join using the Location_Code mapping table. This was created manually by refering to the location codes from the Geo-JSON, and the regional names from the Gas_Consumption table.
 
-This mapping table also allowed me to clean inconsistencies in the naming of regions found in the data; mapping both ‘Inner London’ and ‘Outer London’ as ‘London’; and mapping inconsistencies such as 'Yorkshire and the Humber' to 'Yorkshire and The Humber'.
+This mapping table also allowed inconsistencies in the naming of regions found in the data to be cleaned. Mapping both ‘Inner London’ and ‘Outer London’ as ‘London’; and mapping inconsistencies such as 'Yorkshire and the Humber' to 'Yorkshire and The Humber'.
 ```python
 #Importing the GeoJSON
 with urlopen('https://raw.githubusercontent.com/martinjc/UK-GeoJSON/refs/heads/master/json/eurostat/ew/nuts1.json') as response:
@@ -405,8 +405,7 @@ Location_Code
 </table>
 </div>
 
-
-
+The Location_Code table was joined to bring throughthe desired location codes and clean region names. A  groupby was then performed on to sum where aregions values had been split over multiple rows, e.g. 'Inner London' and 'Outer London'.
 
 ```python
 #This step reclassifies regions into the desired regions found in the Geo-JSON
@@ -623,8 +622,9 @@ Gas_Consumption_Cleaned
 
 
 
+The field \[Location Code\] was checked for NULL values to ensure all rows had been successfully allocated a Location_Code via the join.
 
-After the join a group by was performed to sum the split values for London.
+
 
 ```python
 #Checking that all regions have been successfully allocated a Location_Code
@@ -659,8 +659,6 @@ Gas_Consumption_Cleaned[Gas_Consumption_Cleaned['Location_Code'].isnull()]
 </div>
 
 
-
-The field \[Location Code\] was checked for NULL values
 
 #### Grouping Overly Granular Data
 
@@ -776,7 +774,7 @@ Energy_Price[Energy_Price['Year'] == 2000]
   </tbody>
 </table>
 </div>
-The Geo-JSON only had South East and South West regions so the Southern region was split by averaging its value first with the South East and then with the South West and replaced the East and West values with the averaged ones. This method essentially assumes there is a linear relationship as you run through the values from East to West, allowing for interpolation. This method was selected as the differences in values between South West and Southern, and South East and Southern where small, ~7% from Southern either way.
+The Geo-JSON only had South East and South West regions so the Southern region had to be split. This was split done by averaging its value first with the South East and then with the South West and replaced the East and West values with the averaged ones. This method essentially assumes there is a linear relationship as you run through the values from East to West, allowing for interpolation. This method was selected as the differences in values between South West and Southern, and South East and Southern where small, ~7% from Southern either way.
 
 This could be more appropriately split using a 3<sup>rd</sup> variable to calculate a weighted split based, for example, on population or regional area. This method was however chosen for simplicity and is acceptable as variance between the regions is small.
 ```python
@@ -926,7 +924,7 @@ Values had to be extrapolated for the years 2005 to 2010.
 
 Firstly, the data was plotted to visually determine the data’s trend. The lines produced appear to be mostly straight suggesting a linear relationship between population and time (Accounting Insights, 2024). Although a few outliers can be determined, such as the reduction in population in London in 2020 and 2021, likely caused by the emigration of individuals out of major population centres which occurred in the Covid-19 pandemic (Centre for Cities, 2024). Even with this outlier, from the visual we can observe that the variance year to year is small; therefore, the error of extrapolated values is also likely to be small.
 
-Secondly, Panda’s _.corr_ function was used to calculate Pearson’s correlation values between population(for each region) and year (See the right most column). All values were 0.9 or greater indicating a strong linear correlation between population and year.
+Secondly, Panda’s _.corr_ function was used to calculate Pearson’s correlation values between population (for each region) and year (See the right most column). All values were 0.9 or greater indicating a strong linear correlation between population and year.
 ```python
 Population_by_Region_and_Year_Pivot = Population_by_Region_and_Year.pivot(index = 'Year', columns= 'Region')
 Population_by_Region_and_Year_Pivot['Year'] = Population_by_Region_and_Year_Pivot.index
@@ -1338,6 +1336,7 @@ Population_by_Region_and_Year_Combined_Line.update_layout(
 ```
 ![Extrapolated Population Graph 2](assets/Graphs/Population%20Graphs/Extrapolated%20population%20data%20(Model%202).png)
 *Figure 3*
+
 Another model was fit with datapoints from 2020 to 2022 removed from the training data. Values for 2005 to 2010 were extrapolated and plotted (Figure 3). The transition from extrapolated to real data here is much smoother.
 
 ```python
@@ -1566,7 +1565,7 @@ Population_by_Region_and_Year_Combined_v2[Population_by_Region_and_Year_Combined
 </div>
 
 
-R^2 values were compared for each model to give an objective measure of predictive accuracy. model 2 outperformed model 1 across all regions. The points extrapolated from model 2 were used in the final dataset.  
+R^2 values were compared for each model to give an objective measure of predictive accuracy. Model 2 outperformed model 1 across all regions. The points extrapolated from model 2 were used in the final dataset.  
 ```python
 def extrapolate_population_for_region_r2_model1(region):
     #Filtering to handle each region seperately
@@ -1710,7 +1709,7 @@ The below gragh shows the average unit cost of energy (pence per kWh) to the con
 ![The Relationship Between Fuel Import Price and Cost of Energy](assets/Graphs/Unit%20Cost%20of%20energy%20and%20Fuel/Unit%20Cost%20of%20Energy%20and%20Import%20Cost%20of%20Fuel%20(2002-2023).png)
 *Figure 4*
 
-This graph largely supports the logic set out above. In 2022 the price of gas reached 4.86 pence per kWh which coincided with a steep rise in the cost to consumer up to 33.61 pence per kWh. It is worth noting however that prices were already on the rise in 2021, and the 2022 spike was only an exacerbation to this trend.
+This graph largely supports the logic set out above. In 2022 the price of gas reached 4.86 pence per kWh which coincided with a steep rise in the cost to consumer up to 33.61 pence per kWh. It is worth noting however that prices were already on the rise in 2021, and the 2022 spike was only an exacerbation of this trend.
 
 The relationship between import price of gas and cost to consumer is less obvious before this spike. The correlation matrix below allows for evaluation of the correlation between factors less subjectively.
 
@@ -1722,15 +1721,17 @@ The correlation matrix shows that the cost of gas imports is the best predictor 
 
 This should not be surprising as UK energy pricing policy dictates that there is a direct relationship between the two. We will cover this policy in the next section.
 
-What is surprising is that the year was the best predictor of average unit cost of energy with a p-value of 0.9. This is not caused by the effects of inflation as the data has been deflated (see the cover sheet of data source \[6\]) (Francis-Devine, 2022). This very strong positive correlation suggests that the price of energy inevitably increases with time irrespective of external factors. Although this cannot be stated with confidence as the p-vales of 0.88 and 0.9 are so similar.
+What is surprising is that 'Year' was the best predictor of average unit cost of energy with a p-value of 0.9. This is not caused by the effects of inflation as the data has been deflated (see the cover sheet of data source \[6\]) (Francis-Devine, 2022). This very strong positive correlation suggests that the price of energy inevitably increases with time irrespective of external factors. Although this cannot be stated with confidence as the p-vales of 0.88 and 0.9 are so similar.
 
 In reality, this is a complicated and multifactor issue, the scope of which is not fully explored in this project. The effects of energy company operating costs; the lack of energy storage; the Ofgen price cap; the energy price guarantee; the availability and demand of freight and energy industry workers have not been considered. A large and thorough investigation would be needed to determine the true causes of the 2022 energy crisis.
 
 #### Hypothesis Conclusion
 
-The trend indicated in the line chart and the strength of the correlation between the import price of gas and the unit cost of energy, both support the hypothesis. From this analysis we can conclude that the rise in the price of importing gas due to the Russian Ukrainian conflict has contributed to the increase of energy prices in the UK in 2022.
+The trend indicated in the line chart and the strength of the correlation between the import price of gas and the unit cost of energy, both support the hypothesis. From this analysis we can conclude that the rise in the price of importing gas, due to the Russian Ukrainian conflict (Fulwood, Sharpels, and Henderson, 2022), has contributed to the increase of energy prices in the UK in 2022.
 
 ### Future Energy Policy
+
+The shock to the gas market caused by the Russian Ukrainian conflict, and the resulting energy crisis, has exposed the fragile nature of England's dependancy on gas. In light of this, policy makers have started to mobilise, looking for policy decisions which could help to alleviate the burden felt by the british public.
 
 In the following section UK energy policy will be covered. Data science methods will be employed to explore regional trends in energy consumption and energy affordability as well as the potential affects which changes in energy policy may have.
 
@@ -1746,7 +1747,7 @@ In this section the current policy which sets energy prices (Marginal Pricing) w
 
 ![Marginal Pricing](assets/Pictures/Marginal%20Pricing%20Explained.png)
 
-*Figure 6* - Stewart (2023)
+*Figure 6* - (Stewart, 2023)
 
 Please note the above visual does not use actual values and it merely to demonstrate how marginal pricing works. Gas is very often the most expensive fuel source required to meet demand, and therefore sets the price of a unit of energy (Stewart, 2024).
 
@@ -1756,7 +1757,7 @@ Please note the above visual does not use actual values and it merely to demonst
 
 The above diagram shows the role of marginal pricing in defining the wholesale energy price and how this has a knock on to consumer energy pricing.
 
-What marginal pricing means in practice is that a unit cost to generate energy, which is higher than what it cost, is assigned. Due to this system, there is little incentive provided to energy generating companies to reduce the price of the most expensive way of generating energy.
+What marginal pricing means in practice is that a unit cost to generate energy, which is higher than what it cost to do so, is assigned. Due to this system, there is little incentive provided to energy generating companies to reduce the price of the most expensive way of generating energy.
 
 Marginal pricing has also been criticised as running opposed to the UK government’s own targets to fully decarbonise the power sector by 2035 (IEA, 2024).
 
@@ -1784,7 +1785,7 @@ Nodal Pricing is the most granular pricing strategy currently being proposed. In
 
 ### The Choropleth Cheat Sheet
 
-The following section is heavily reliant on the use of choropleths (map graphs) to interpret regional data. To make the meanings of these easier to interpret a cheat sheet table has been included below.
+The following section is heavily reliant on the use of choropleths (map graphs) to interpret regional data. To make the meanings of these easier to interpret, a cheat sheet table has been included below.
 
 ![Choropleth Cheat Sheet](assets/Pictures/Choropleth%20Cheat%20Sheet.png)
 
@@ -1794,15 +1795,17 @@ The following section is heavily reliant on the use of choropleths (map graphs) 
 
 As Zonal Pricing is the most likely energy price policy reform to be implemented it is worth investigating further.
 
-Should Zonal Pricing be implemented it would undoubtably be beneficial as it can only decrease the unit cost of energy or at worst keep it the same. This should be kept in mind throughout the following section where the effects of Zonal Pricing on regional inequality are examined. Even if the threat of increasing inequality due to regional pricing is observed, it should be noted that this is against a backdrop of reduced energy costs. In theory, everyone will pay less, it is just that some will pay less than others. The risk of Zonal Pricing increasing regional inequality is more concerning once you consider that there will be pressure placed on Ofgen by energy companies who will look to redress their loss in profits via another mechanism.
+Should Zonal Pricing be implemented it would, in theory, be wholly beneficial. Only decreasing the unit cost of energy or at worst keeping it the same. This should be kept in mind throughout the following section where the effects of Zonal Pricing on regional inequality are examined. Even if the threat of increasing inequality due to regional pricing is observed, it should be noted that this is against a backdrop of reduced energy costs. In theory, everyone will pay less, it is just that some will pay less than others.
+
+The risk of Zonal Pricing increasing regional inequality is more concerning once you consider that there will be pressure placed on Ofgen by energy companies who will look to redress their loss in profits via another mechanism.
 
 Please note the regions shown in the choropleth visualisation below do not align with the zones which would determine zonal pricing. Zonal Pricing has not currently been implemented and the regions it may use have not been published.
 
 #### Who Uses Gas
 
-The figure below shows the energy generated from gas consumed per person by region between 2005 and 2022. In this figure the scale is set to plot the colour of the choropleth between the maxima and minima of the whole set not just for each year. This means we can use this figure to compare regional trends as well as trends over time.
+The figure below shows the gas consumed per person by region between 2005 and 2022. In this figure the scale is set to plot the colour of the choropleth between the maxima and minima of the whole set not just for each year. This means we can use this figure to compare regional trends as well as trends over time.
 
-The figure shows a consistent trend towards less gas usage, as we would expect from figure (THIS WILL BE THE RED AND BLUE LINE ONE). It also shows a regional trend of greater gas consumption in the north of England. The largest consumers in 2022 where the East Midlands and Yorkshire and The Humber, with a value of 5.2 MWh/person, the lowest consumer was the South East, with a value of 3.3 MWh/person.
+The figure shows a consistent trend towards less gas usage, as we would expect from figure (Figure 8). It also shows a regional trend of greater gas consumption in the north of England. The largest consumers in 2022 where the East Midlands and Yorkshire and The Humber, with a value of 5.2 MWh/person, the lowest consumer was the South East, with a value of 3.3 MWh/person.
 
 Please note this figure only plots domestic energy consumption so will not be skewed by industry energy use.
 
@@ -1812,7 +1815,7 @@ Please note this figure only plots domestic energy consumption so will not be sk
 
 #### Who Would be Affected the Most by Zonal Pricing
 
-The figure below shows the energy generated from gas consumed per person as a portion of the median salary by region between 2005 and 2022. This can be thought of as a measure to demonstrate who would be affected most in the case that regions are penalised for gas consumption. In this figure the scale functions independently for each year. The colour scale is stretched between the maxima and minima of the for each year. This means we can use this figure to compare regions proportional to one another but cannot observe trends over time.
+The figure below shows the gas consumed per person as a portion of the median salary by region between 2005 and 2022. This can be thought of as a measure to demonstrate who would be affected most in the case that regions are penalised for gas consumption. In this figure the scale functions independently for each year. The colour scale is stretched between the maxima and minima of the for each year. This means we can use this figure to compare regions proportional to one another but cannot observe trends over time.
 
 You can see that consistently Yorkshire and The Humber is the most vulnerable to a regional increase in the price of gas, with a 2022 value of 1.66e-07 (GWh/person/£), and the South East being the least vulnerable to a regional increase in the price of gas, with a 2022 value of 0.93e-07 (GWh/person/£).
 
@@ -1822,7 +1825,7 @@ You can see that consistently Yorkshire and The Humber is the most vulnerable to
 
 #### Has the Proportional Vulnerability to Regional Pricing Changed Over Time
 
-The figure below also shows the energy generated from gas consumed per person as a portion of the median salary by region between 2005 and 2022. This time each year is plotted as a percentage difference from the minimum that year. The scale is also fixed between the minimum and maximum for the dataset, allowing us to compare the trend over time as well the difference between regions.
+The figure below also shows the gas consumed per person as a portion of the median salary by region between 2005 and 2022. This time each year is plotted as a percentage difference from the minimum that year. The scale is also fixed between the minimum and maximum for the dataset, allowing us to compare the trend over time as well the difference between regions.
 
 We can see that there is a persistent trend of still inequality in the vulnerability to change in gas price, with the North being more vulnerable and the South less vulnerable. This gap in inequality is shrinking, this can be seen as the colour difference between the North and South is decreasing.
 
@@ -1885,6 +1888,8 @@ Farah, S. (2024). _How zonal pricing could make bills cheaper_. \[online\] Octop
 Francis-Devine, B. (2022). Average earnings by age and region. _commonslibrary.parliament.uk_. \[online\] Available at: <https://commonslibrary.parliament.uk/research-briefings/cbp-8456/>.
 
 Francis-Devine, B. (2024). Poverty in the UK: Statistics. _commonslibrary.parliament.uk_, \[online\] 7096(7096). Available at: <https://commonslibrary.parliament.uk/research-briefings/sn07096/>.
+
+Fulwood, M. and Sharpels, J. and Henderson, J. (2022) ‘Ukraine Invasion: What This Means for the European Gas Market’, _Oxford Energy Comment_, pp.2. Available at: Ukraine Invasion: What This Means for the European Gas Market - Oxford Institute for Energy Studies. [Accessed 30 Dec. 2024].
 
 IEA (2024). _Executive summary – United Kingdom 2024 – Analysis - IEA_. \[online\] IEA. Available at: <https://www.iea.org/reports/united-kingdom-2024/executive-summary>. \[Accessed 24 Dec. 2024\].
 
