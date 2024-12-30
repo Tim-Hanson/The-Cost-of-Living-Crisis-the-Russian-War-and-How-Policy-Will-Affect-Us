@@ -83,7 +83,131 @@ _\-Please note dataset \[9\] was used in the code but the data was not in the en
 
 To be able to plot the regional data onto choropleths it was necessary to ensure that the regional naming convention for all data match that of the Geo-JSON. The chosen Geo-JSON (dataset \[8\]) used 3 letter location codes, which can be mapped from RGN20NM (regional codes), whereas the population dataset (dataset \[3\]) used LAD20CD (Local authority district code).
 
-HERE SHOW conversion Table
+```python
+#Source for Lookup table:
+#https://geoportal.statistics.gov.uk/datasets/ons::local-authority-district-to-region-april-2020-lookup-in-en/explore
+#In excel Find and replace was used to change all instances of 'East of England' to 'East'
+LAD20_to_RGN20_Conversion_Table = pd.read_excel(io=Local_Authority_District_to_Region_4)
+LAD20_to_RGN20_Conversion_Table
+```
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>LAD20CD</th>
+      <th>LAD20NM</th>
+      <th>RGN20CD</th>
+      <th>RGN20NM</th>
+      <th>FID</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>E06000012</td>
+      <td>North East Lincolnshire</td>
+      <td>E12000003</td>
+      <td>Yorkshire and The Humber</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>E06000013</td>
+      <td>North Lincolnshire</td>
+      <td>E12000003</td>
+      <td>Yorkshire and The Humber</td>
+      <td>2.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>E06000014</td>
+      <td>York</td>
+      <td>E12000003</td>
+      <td>Yorkshire and The Humber</td>
+      <td>3.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>E07000163</td>
+      <td>Craven</td>
+      <td>E12000003</td>
+      <td>Yorkshire and The Humber</td>
+      <td>4.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>E07000164</td>
+      <td>Hambleton</td>
+      <td>E12000003</td>
+      <td>Yorkshire and The Humber</td>
+      <td>5.0</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>315</th>
+      <td>E06000062</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>South East</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>316</th>
+      <td>E06000063</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>South East</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>317</th>
+      <td>E06000064</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>South East</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>318</th>
+      <td>E06000065</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>South East</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>319</th>
+      <td>E06000066</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>South East</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+<p>320 rows × 5 columns</p>
+</div>
 
 A conversion table was used (see above) (dataset \[4\]) to join the corresponding LAD20CD values onto the population dataset.
 
