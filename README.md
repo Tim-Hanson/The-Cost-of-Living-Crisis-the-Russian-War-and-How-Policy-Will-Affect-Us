@@ -84,6 +84,7 @@ _\-Please note dataset \[9\] was used in the code but the data was not in the en
 
 To be able to plot the regional data onto choropleths it was necessary to ensure that the regional naming convention for all data match that of the Geo-JSON. The chosen Geo-JSON (dataset \[8\]) used 3 letter location codes, which can be mapped from RGN20NM (regional codes), whereas the population dataset (dataset \[3\]) used LAD20CD (Local authority district code).
 
+A conversion table was used (dataset \[4\]) to join the corresponding LAD20CD values onto the population dataset.
 ```python
 #Source for Lookup table:
 #https://geoportal.statistics.gov.uk/datasets/ons::local-authority-district-to-region-april-2020-lookup-in-en/explore
@@ -198,8 +199,8 @@ LAD20_to_RGN20_Conversion_Table
 <p>320 rows × 5 columns</p>
 </div>
 
-A conversion table was used (see above) (dataset \[4\]) to join the corresponding LAD20CD values onto the population dataset.
 
+Panda’s _.isna_ function was used to check for any failed matches. Some results were returned. To rectify this the missing values were added to the conversion table and the code reran.
 ```python
 #Join the RGN20NM onto the UK_Population_Density_Raw_Data table
 UK_Population_Raw_Data_With_Region = pd.merge(UK_Population_Raw_Data, LAD20_to_RGN20_Conversion_Table, left_on='ladcode23', right_on='LAD20CD', how='left')
@@ -216,7 +217,7 @@ len(UK_Population_Raw_Data_With_Region[UK_Population_Raw_Data_With_Region['RGN20
 
     0
 
-Panda’s _.isna_ function was used to check for any failed matches. Some results were returned. To rectify this the missing values were added to the conversion table and the code reran.
+
 
 #### Accounting for varying regional structures in data
 
