@@ -1707,7 +1707,7 @@ R2_outcomes
 
 Let us first focus on the claim that the Russia – Ukraine conflict was the cause for the large increase in energy prices. The claim was based on the logic that due to European embargoes and santions placed on Russia, the demand for gas in Europe would have to be met through alternative sources from the market, in turn increasing the market value of gas. The additional cost is then handed down to the consumer as increased energy bills (Jones, 2022).
 
-The below gragh shows the average unit cost of energy (pence per kWh) to the consumer (dataset \[5\]), and the average unit cost of fuels in terms of their energy generating potential (pence per kWh) from varying imported fuels (dataset \[6\]).
+Figure 4 shows the average unit cost of energy (pence per kWh) to the consumer (dataset \[5\]), and the average unit cost of fuels in terms of their energy generating potential (pence per kWh) from varying imported fuels (dataset \[6\]).
 
 ![The Relationship Between Fuel Import Price and Cost of Energy](assets/Graphs/Unit%20Cost%20of%20energy%20and%20Fuel/Unit%20Cost%20of%20Energy%20and%20Import%20Cost%20of%20Fuel%20(2002-2023).png)
 *Figure 4*
@@ -1730,13 +1730,13 @@ In reality, this is a complicated and multifactor issue, the scope of which is n
 
 #### Hypothesis Conclusion
 
-The trend indicated in the line chart and the strength of the correlation between the import price of gas and the unit cost of energy, both support the hypothesis. From this analysis we can conclude that the rise in the price of importing gas, due to the Russian Ukrainian conflict (Fulwood, Sharpels, and Henderson, 2022), has contributed to the increase of energy prices in the UK in 2022.
+The trend indicated in the line chart and the strength of the correlation between the import price of gas and the unit cost of energy, both support the hypothesis. From this analysis we can conclude that the rise in the price of importing gas, due to the Russia – Ukraine conflict (Fulwood, Sharpels, and Henderson, 2022), has contributed to the increase of energy prices in the UK in 2022.
 
 ### Future Energy Policy
 
-The shock to the gas market caused by the Russian Ukrainian conflict, and the resulting energy crisis, has exposed the fragile nature of England's dependancy on gas. In light of this, policy makers have started to mobilise, looking for policy decisions which could help to alleviate the burden felt by the british public.
+The shock to the gas market caused by the Russia - Ukraine conflict, and the resulting energy crisis, has exposed the fragile nature of England's dependancy on gas. In light of this, policy makers have started to mobilise, looking for policy decisions which could help to alleviate the burden felt by the British public.
 
-In the following section UK energy policy will be covered. Data science methods will be employed to explore regional trends in energy consumption and energy affordability as well as the potential affects which changes in energy policy may have.
+In the following section UK energy policy will be covered. Data science methods will be employed to explore regional trends in energy consumption and energy affordability as well as the potential effects which changes in energy policy may have.
 
 ### The UK Energy Market
 
@@ -1772,25 +1772,25 @@ Marginal pricing has also been criticised as running opposed to the UK governmen
 
 *Figure 9*
 
-The consumption of energy from gas has fallen consistently with time in the UK. However, very little change in the proportion of total energy consumed via gas has been seen. Which has consistently stayed at ~34% since 2010, omitting 2020 and 2021. This supports the claim that marginal pricing does not provide enough incentive to reduce reliance on gas.
+The consumption of energy from gas has fallen consistently with time in the UK. However, very little change in the proportion of total energy consumed via gas has been seen, which has consistently stayed at ~34% since 2010, omitting 2020 and 2021. This supports the claim that marginal pricing does not provide enough incentive to reduce reliance on gas.
 
 #### Zonal Pricing
 
 Zonal Pricing, also referred to as Locational Marginal Pricing (LMP), is the pricing policy substitute which has been suggested by REMA.
 
-Zonal Pricing is an alternative way to set unit prices in the wholesale energy market. LMP is calculated similarly with regards to setting the unit price based on the most expensive type of supply, but this unit cost is allocated per zone rather than nationally. This is a credible way to restructure energy pricing and would encourage local competition between energy companies to drive costs down. In turn, encouraging energy companies to focus on producing more renewable energy to stay locally competitive (Farah, 2024).
+Zonal Pricing is an alternative way to set unit prices in the wholesale energy market. LMP is calculated similarly with regards to setting the unit price based on the most expensive type of supply, but this unit cost is allocated per zone rather than nationally. This is a credible way to restructure energy pricing and would encourage local competition between energy companies to drive costs down. This in turn, encourages energy companies to focus on producing more renewable energy to stay locally competitive (Farah, 2024).
 
 Critics of Zonal pricing argue that the new structure would not address root causes of energy inefficiencies stemming from inadequate grid infrastructure (Renewableuk.com, 2019).
 
 #### Nodal Pricing
 
-Nodal Pricing is the most granular pricing strategy currently being proposed. In this form of pricing, the unit cost of energy is set based several factors which are taken as readings from over a thousand nodes across the UK. It accounts for local patterns of load, generation, and the physical limits of transmission system. Using a nodal approach would help to drive infrastructure efficiency and ensure price transparency by reflecting real-time supply and demand conditions at each node (Diversegy, 2024).
+Nodal Pricing is the most granular pricing strategy currently being proposed. In this form of pricing, the unit cost of energy is set based on several factors which are taken as readings from over a thousand nodes across the UK. It accounts for local patterns of load, generation, and the physical limits of transmission systems. Using a nodal approach would help to drive infrastructure efficiency and ensure price transparency by reflecting real-time supply and demand conditions at each node (Diversegy, 2024).
 
-### The Choropleth Cheat Sheet
+### The Choropleth Interpretation Summary
 
-The following section is heavily reliant on the use of choropleths (map graphs) to interpret regional data. To make the meanings of these easier to interpret, a cheat sheet table has been included below.
+The following section is heavily reliant on the use of choropleths (map graphs) to interpret regional data. To make the meanings of these easier to interpret, an interpretation summary has been included below.
 
-![Choropleth Cheat Sheet](assets/Pictures/Choropleth%20Cheat%20Sheet.png)
+![Choropleth Interpretation Summary](assets/Pictures/Choropleth_Interpretation_Summary.png)
 
 *Figure 10*
 
