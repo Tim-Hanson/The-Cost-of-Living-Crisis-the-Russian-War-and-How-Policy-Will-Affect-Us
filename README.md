@@ -924,7 +924,7 @@ Values had to be extrapolated for the years 2005 to 2010.
 
 Firstly, the data was plotted to visually determine the data’s trend. The lines produced appear to be mostly straight suggesting a linear relationship between population and time (Accounting Insights, 2024). Although a few outliers can be determined, such as the reduction in population in London in 2020 and 2021, likely caused by the emigration of individuals out of major population centres which occurred in the Covid-19 pandemic (Centre for Cities, 2024). Even with this outlier, from the visual we can observe that the variance year to year is small; therefore, the error of extrapolated values is also likely to be small.
 
-Secondly, Panda’s _.corr_ function was used to calculate Pearson’s correlation values between population (for each region) and year (See the right most column). Apart from London and the North East, all values were 0.98 or greater indicating a very strong linear correlation between population and year. The outliers in 2020 and 2021 in London have already been discussed; population values for the North East are significantly smaller (only 42% of the mean regional population for 2022) than values for other regions meaning smaller variations in trend cause proportionally higher impact to the p-value.
+Secondly, Panda’s _.corr_ function was used to calculate Pearson’s correlation values between population (for each region) and year (See the right most column). Apart from London and the North East, all values were 0.98 or greater indicating a very strong linear correlation between population and year. The outliers in 2020 and 2021 in London have already been discussed; population values for the North East are significantly smaller (only 42% of the mean regional population for 2022) than values for other regions meaning smaller variations in trend cause proportionally higher impact to the r-value.
 
 ```python
 Population_by_Region_and_Year_Pivot = Population_by_Region_and_Year.pivot(index = 'Year', columns= 'Region')
@@ -1720,11 +1720,11 @@ The relationship between import price of gas and cost to consumer is less obviou
 
 *Figure 5*
 
-The correlation matrix shows that the cost of gas imports is the best predictor (of the fuel types shown here) of the unit cost of energy, with a p-value of 0.88.
+The correlation matrix shows that the cost of gas imports is the best predictor (of the fuel types shown here) of the unit cost of energy, with a r-value of 0.88.
 
 This should not be surprising as UK energy pricing policy dictates that there is a direct relationship between the two. We will cover this policy in the next section.
 
-What is surprising is that 'Year' was the best predictor of average unit cost of energy with a p-value of 0.9. This is not caused by the effects of inflation as the data has been deflated (see the cover sheet of data source \[6\]) (Francis-Devine, 2022). This very strong positive correlation suggests that the price of energy inevitably increases with time irrespective of external factors. Although this cannot be stated with confidence as the p-vales of 0.88 and 0.9 are so similar.
+What is surprising is that 'Year' was the best predictor of average unit cost of energy with a r-value of 0.9. This is not caused by the effects of inflation as the data has been deflated (see the cover sheet of data source \[6\]) (Francis-Devine, 2022). This very strong positive correlation suggests that the price of energy inevitably increases with time irrespective of external factors. Although this cannot be stated with confidence as the p-vales of 0.88 and 0.9 are so similar.
 
 In reality, this is a complicated and multifactor issue, the scope of which is not fully explored in this project. The effects of energy company operating costs; the lack of energy storage; the Ofgen price cap; the energy price guarantee; the availability and demand of freight and energy industry workers have not been considered. A large and thorough investigation would be needed to determine the true causes of the 2022 energy crisis.
 
